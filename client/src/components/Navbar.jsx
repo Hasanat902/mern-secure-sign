@@ -18,7 +18,7 @@ const Navbar = () => {
               About
             </li>
           </Link>
-          <Link to="/signIn">
+          <Link to="/signin">
             <li className="font-bold text-slate-500 hover:text-gray-700">
               Sign In
             </li>
