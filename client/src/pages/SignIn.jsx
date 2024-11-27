@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -14,7 +20,7 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch(signInStart());
     const res = await fetch("/api/auth/signin", {
       method: "POST",
       headers: {
@@ -24,8 +30,7 @@ const SignIn = () => {
     });
     const data = await res.json();
     if (data.email) {
-      setLoading(false);
-      setError(false);
+      dispatch(signInFailure(data));
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -33,10 +38,10 @@ const SignIn = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      dispatch(signInSuccess(data));
       navigate("/");
     } else {
-      setError(true);
-      setLoading(false);
+      dispatch(signInFailure("User not found"));
     }
   };
 
@@ -71,7 +76,9 @@ const SignIn = () => {
           Sign Up
         </Link>
       </p>
-      <p className="text-red-600 mt-3">{error && "Something went wrong"}</p>
+      <p className="text-red-600 mt-3">
+        {error ? error.message || "Something went wrong" : ""}
+      </p>
     </div>
   );
 };
