@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -67,10 +68,11 @@ const SignUp = () => {
         />
         <button
           disabled={loading}
-          className="bg-slate-600 text-white p-4 uppercase rounded-lg font-semibold hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-600 text-white p-3 uppercase rounded-lg font-semibold hover:opacity-95 disabled:opacity-80"
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
+        <OAuth /> 
       </form>
       <p className="mt-4">
         Have an account?{" "}

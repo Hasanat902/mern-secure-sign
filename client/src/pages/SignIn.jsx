@@ -7,6 +7,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -65,10 +66,11 @@ const SignIn = () => {
         />
         <button
           disabled={loading}
-          className="bg-slate-600 text-white p-4 uppercase rounded-lg font-semibold hover:opacity-95 disabled:opacity-80"
+          className="bg-slate-600 text-white p-3 uppercase rounded-lg font-semibold hover:opacity-95 disabled:opacity-80"
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
+        <OAuth />
       </form>
       <p className="mt-4">
         Dont have an account?{" "}
