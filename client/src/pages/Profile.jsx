@@ -4,6 +4,7 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOut,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -55,9 +56,18 @@ const Profile = () => {
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-     dispatch(deleteUserFailure(error)); 
+      dispatch(deleteUserFailure(error));
     }
-  }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await fetch("/api/auth/signout");
+      dispatch(signOut());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -96,10 +106,16 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-4">
-        <span onClick={handleDeleteAccount} className="text-red-500 font-semibold cursor-pointer">
+        <span
+          onClick={handleDeleteAccount}
+          className="text-red-500 font-semibold cursor-pointer"
+        >
           Delete Account
         </span>
-        <span className="text-red-500 font-semibold cursor-pointer">
+        <span
+          onClick={handleSignOut}
+          className="text-red-500 font-semibold cursor-pointer"
+        >
           Sign Out
         </span>
       </div>
